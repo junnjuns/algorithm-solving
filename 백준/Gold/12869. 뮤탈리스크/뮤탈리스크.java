@@ -46,19 +46,10 @@ public class Main
 	        }
 	        
 	        for(int k=0; k<6; k++){
-	            int x = now[0] - dmg1[k];
-	            int y = now[1] - dmg2[k];
-	            int z = now[2] - dmg3[k];
+	            int x = Math.max(0, now[0] - dmg1[k]);
+	            int y = Math.max(0, now[1] - dmg2[k]);
+	            int z = Math.max(0, now[2] - dmg3[k]);
 	            
-	            if(x < 0){
-	                x = 0;
-	            }
-	            if(y < 0){
-	                y = 0;
-	            }
-	            if(z < 0){
-	                z = 0;
-	            }
 	            
 	            if(vis[x][y][z] == 0){
 	                dq.add(new int[] {x, y, z, now[3]+1});
