@@ -47,17 +47,22 @@ public class Solution
 	
 	static void powerSet(int dep){
 	    if(dep == food){
-    	    
-    	    for(int idx = 0; idx < cnt; idx++){
-    	        if(vis[badArr[idx][0]] && vis[badArr[idx][1]]){
-    	            return;
-    	        }
-    	    }
     	    answer++;
 	        return;
 	    }
-	    vis[dep] = true;
-	    powerSet(dep+1);
+        
+        boolean check = true;
+        for(int idx = 0; idx < cnt; idx++){
+    	    if((vis[badArr[idx][0]] && badArr[idx][1] == dep) || (vis[badArr[idx][1]] && badArr[idx][0] == dep)){ 
+    	        check = false;
+    	        break;
+    	    }
+    	}
+    	
+        if(check){
+	        vis[dep] = true;
+	        powerSet(dep+1);
+        }
 	    
 	    
 	    vis[dep] = false;
