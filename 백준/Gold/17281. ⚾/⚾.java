@@ -5,7 +5,17 @@ import java.io.*;
 //이닝이 지나도 타순은 유지되어야 한다.
 //최대 점수를 얻을 수 있도록 각 이닝에서 타순을 정해야 한다.(단 , 1번 선수는 항상 4번 타자)
 
-//경기 시작 전 선발 라인업 정하기 (단, 4번 타자는 무조건 1번 선수) 
+
+//   1. 이닝 수 입력 받기
+//   2. 각 선수의 이닝 결과 입력 받기
+//   3. 4번 타자는 항상 1번 선수로 설정
+//   4. 나머지 선수들의 타순을 결정하기 위해 순열 호출
+//   5. 타순이 결정되면 해당 순서로 경기를 시작
+//      5-1. 각 이닝마다 현재 선수의 결과에 따라 점수를 계산
+//      5-2. 3아웃이 되면 다음 이닝으로 넘어감
+//   6. 경기가 끝나면 점수를 갱신하여 최대 점수를 기록
+//   7. 모든 순열을 시도한 후, 최대 점수를 출력
+ 
 
 public class Main {
     static int[][] player; // 선수들 이닝 결과 저장 배열
@@ -44,14 +54,8 @@ public class Main {
     static void permut(int playerNum) {
         if (playerNum == 10) { // 1 ~ 9 번 선수까지 다 넣어줬으면 경우의 수 생성 완료
             
-            // for(int idx = 1; idx < 10; idx++){
-            //     System.out.print(lineUp[idx]+" ");    
-            // }
-            // System.out.println();
             gameStart(); // 경기 시작
-            // System.out.println();
-            // System.out.println();
-            // ㅇ ㅇ ㅇ 1 ㅇ ㅇ ㅇ ㅇ ㅇ
+            
             return;
         }
     
@@ -80,12 +84,8 @@ public class Main {
     
             while (true) { // 이닝 시작
                 
-                //System.out.print("- "+lineUp[nowTurn]+" : ");
                 int res = player[lineUp[nowTurn]][curInning]; // 현재 선수의 결과를 res에 저장
                 
-                //System.out.println("현재 선수 결과: "+res+" 아웃: "+outCnt +" 점수: "+score);
-                
-                //System.out.println(res);
                 
                 if (res == 0) { // 만약 아웃이면
     
@@ -98,25 +98,25 @@ public class Main {
                 
                 
                 else if (res == 1) { // 만약 1루타 일 때
-                    for (int baseIdx = 2; baseIdx >= 0; baseIdx--) {
+                    for (int baseIdx = 2; baseIdx >= 0; baseIdx--) { // 3루 부터 1루순으로  확인한다.
                         
-                        if(base[baseIdx] == 1){
-                            base[baseIdx] = 0;
+                        if(base[baseIdx] == 1){ //만약 해당 루에 사람이 있으면 
+                            base[baseIdx] = 0; // 이동해야 되기 때문에 0으로 초기화
                             
-                            if(baseIdx + res >= 3){
+                            if(baseIdx + res >= 3){ //만약 홈 or 홈 이상으로 가면 점수 + 1
                                 score += 1;
                             }
-                            else{
+                            else{ //아직 홈에 도착하지 않으면 해당 루에 사람을 위치 시킴
                                 base[baseIdx + res] = 1;
                             }
                         }
                         
                     }
-                    base[res - 1] = 1;
+                    base[res - 1] = 1; // 1루타를 친 타자를 1루에 보낸다.
                 }
     
                 else if (res == 2) { // 만약 2루타 일 때
-                    for (int baseIdx = 2; baseIdx >= 0; baseIdx--) {
+                    for (int baseIdx = 2; baseIdx >= 0; baseIdx--) { //1루타와 동일
                         
                         if(base[baseIdx] == 1){
                             base[baseIdx] = 0;
@@ -134,7 +134,7 @@ public class Main {
                 }
     
                 else if (res == 3) { // 만약 3루타 일 때
-                    for (int baseIdx = 2; baseIdx >= 0; baseIdx--) {
+                    for (int baseIdx = 2; baseIdx >= 0; baseIdx--) { //1루타와 동일
                         
                         if(base[baseIdx] == 1){
                             base[baseIdx] = 0;
@@ -160,13 +160,8 @@ public class Main {
                     }
                     score += 1;
                 }
-                //System.out.println(nowTurn);
                 nowTurn += 1;
-                nowTurn = nowTurn == 10 ? 1 : nowTurn;
-                // for(int i : base){
-                //     System.out.print(i+" ");
-                // }
-                // System.out.println();
+                nowTurn = nowTurn == 10 ? 1 : nowTurn; //타순을 다음 타순으로 업데이트함. 만약 현재 9번 타자이면 다시 1번부터 시작
                 
             } // 이닝 끝
             nowTurn += 1;
