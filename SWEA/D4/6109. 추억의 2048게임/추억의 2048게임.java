@@ -1,14 +1,22 @@
 import java.util.*;
 import java.io.*;
 
-
+//   테스트 케이스의 수 입력
+//   각 테스트 케이스 시작
+//       보드의 크기(size)와 이동 방향(direction)을 입력받음
+//       보드의 각 타일에 대한 값을 입력받음
+//       이동 방향에 따라 보드의 타일을 이동시킴
+//           각 타일을 주어진 방향으로 이동하면서 합칠 수 있으면 합친다.
+//           합쳐진 타일은 음수로 표시하여 중복 합쳐지는 것을 방지
+//       이동이 완료된 보드의 상태를 출력
+//           음수로 표시된 타일은 다시 양수로 바꿔서 출력
+//   테스트 케이스 끝
 
 class Solution {
 	
 	static int size;
 	static String direction;
 	static int[][] board;
-	
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
