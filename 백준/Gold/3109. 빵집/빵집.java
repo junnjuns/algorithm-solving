@@ -53,27 +53,26 @@ class Main {
 			return true;
 		}
 		
-		if(x - 1 >= 0 && y + 1 >= 0 && x - 1 < height && y + 1 < width && board[x - 1][y + 1] == '.' && !vis[x - 1][y + 1]) {
-			vis[x - 1][y + 1] = true;
-			if(move(x - 1, y + 1))
-			    return true;
-		}
 		
-		if(x >= 0 && y + 1 >= 0 && x < height && y + 1 < width && board[x][y + 1] == '.' && !vis[x][y + 1]) {
-			vis[x][y + 1] = true;
-			if(move(x, y + 1))
-			    return true;
-		}
-		
-		if(x + 1 >= 0 && y + 1 >= 0 && x + 1 < height && y + 1 < width && board[x + 1][y + 1] == '.' && !vis[x + 1][y + 1]) {
-			vis[x + 1][y + 1] = true;
-			if(move(x + 1, y + 1))
-			    return true;
+		for(int dir = 0; dir < 3; dir++){
+		    int nx = x + dx[dir];
+		    int ny = y + dy[dir];
+		    
+		    if(checked(nx, ny)){
+		        vis[nx][ny] = true;
+		        if(move(nx, ny)){
+		            return true;
+		        }
+		    }
+		    
 		}
 		
 		return false;
 	}	
 	
+	static boolean checked(int x, int y){
+	    return x >= 0 && y >= 0 && x < height && y < width && board[x][y] == '.' && !vis[x][y];
+	}
 }
 
 
