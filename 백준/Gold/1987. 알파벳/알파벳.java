@@ -5,12 +5,11 @@ import java.io.*;
 
 public class Main {
     
-    static char[][] board;  
+    static int[][] board;  
     static int row, col;   // 행(row)과 열(col)의 크기
     static int[] dx = {1, -1, 0, 0};  // 이동 방향을 나타내는 배열 (상하좌우)
     static int[] dy = {0, 0, 1, -1};  
-    static int[][] vis;  // 방문 여부를 기록하는 배열
-    static Map<Character, Integer> map = new HashMap<>();
+    static boolean[] vis;  // 방문 여부를 기록하는 배열
     static int answer;
     
     public static void main(String[] args) throws Exception {
@@ -23,20 +22,18 @@ public class Main {
         row = Integer.parseInt(st.nextToken());
         col = Integer.parseInt(st.nextToken());
         
-        board = new char[row][col];
-        vis = new int[row][col];
+        board = new int[row][col];
+        vis = new boolean[26];
         
         //board판 입력
         for(int h = 0; h < row; h++){
             String str = br.readLine();
             for(int w = 0; w < col; w++){
-                board[h][w] = str.charAt(w);
-                if(!map.containsKey(board[h][w])){
-                    map.put(board[h][w], -1);
-                }
+                board[h][w] = str.charAt(w) - 'A';
             }
         }
         
+        vis = new boolean[26];
         move(0, 0, 1);
         bw.write(answer+"");
         
@@ -46,21 +43,19 @@ public class Main {
     
     static void move(int sx, int sy, int max){
         answer = Math.max(answer, max);
-        vis[sx][sy] = 1;
-        map.put(board[sx][sy], 1);
+        vis[board[sx][sy]] = true;
         
         for(int dir = 0; dir < 4; dir++){
             int nx = sx + dx[dir];
             int ny = sy + dy[dir];
             
             if(nx >= 0 && ny >= 0 && nx < row && ny < col){
-                if(map.get(board[nx][ny]) == -1 && vis[nx][ny] == 0){
-                    vis[nx][ny] = 1;
+                if(vis[board[nx][ny]] == false){
+                    vis[board[sx][sy]]= true;
                     move(nx, ny, max + 1);
                 }
             }
         }
-        vis[sx][sy] = 0;          // 방문 표시 해제
-        map.put(board[sx][sy], -1);
+        vis[board[sx][sy]] = false; 
     }
 }
