@@ -35,28 +35,27 @@ public class Main {
         for(int row = 0; row < boardSize; row++){
             for(int col = 0; col < boardSize; col++){
                 if(vis[row][col] == false){
-                    move1(row, col);
+                    move(row, col);
                     answer++;
                 }
             }
         }
         bw.write(answer+" ");
         
-        vis = new boolean[boardSize][boardSize];
         for(int row = 0; row < boardSize; row++){
             for(int col = 0; col < boardSize; col++){
-                if(vis[row][col] == false && board[row][col] == 'R'){
-                    fillRed(row, col);
+                if(board[row][col] == 'G'){
+                    board[row][col] = 'R';
                 }
             }
         }
-        
+       
         answer = 0;
         vis = new boolean[boardSize][boardSize];
         for(int row = 0; row < boardSize; row++){
             for(int col = 0; col < boardSize; col++){
                 if(vis[row][col] == false){
-                    move1(row, col);
+                    move(row, col);
                     answer++;
                 }
             }
@@ -67,33 +66,8 @@ public class Main {
         bw.close();
     }
     
-    static void fillRed(int sx, int sy){
-        ArrayDeque<int[]> dq = new ArrayDeque<>();
-        dq.add(new int[] {sx, sy});
-        
-        while(dq.size() != 0){
-            int[] now = dq.poll();
-            
-            
-            for(int dir = 0; dir < 4; dir++){
-                int nx = now[0] + dx[dir];
-                int ny = now[1] + dy[dir];
-                
-                if(nx >= 0 && ny >= 0 && nx < boardSize && ny < boardSize){
-                    if(vis[nx][ny] == false && (board[nx][ny] == 'R' || board[nx][ny] == 'G')){
-                        dq.add(new int[] {nx, ny});
-                        vis[nx][ny] = true;
-                        board[nx][ny] = 'R';
-                    }
-                }
-                
-            }
-            
-        }
-    }
     
-    
-    static void move1(int sx, int sy){
+    static void move(int sx, int sy){
         ArrayDeque<int[]> dq = new ArrayDeque<>();
         dq.add(new int[] {sx, sy});
         vis[sx][sy] = true;
