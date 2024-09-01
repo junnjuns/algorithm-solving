@@ -1,7 +1,17 @@
 import java.util.*;
 import java.io.*;
 
-
+//board를 생성하면서 cctv를 찾으면 cctv의 좌표와 타입을 갖고있는 cctv 객체를 생성 후 리스트에 추가한다.
+//list 내부에 있는 cctv들을 모두 확인하는 시뮬레이션을 실행한다.
+    //list 내부에 있는 cctv를 하나씩 확인한다.
+        //cctv의 종류에 따라 확인 할 수 있는 시야가 존재한다. 때문에 각 cctv의 타입에 따라 봐야할 시야를 확인한다.
+        //시야를 확인 할 때 벽이 아니면 모두 확인 가능하다. 확인했다는 표시를 할 때 cctv끼리 겹칠 수 있기 때문에 한번 확인할 때 한 가지로 방법으로 초기화 하는것이 아닌 -1씩 추가한다.
+        //cctv의 한 방향을 모두 봤으면 다음 cctv를 확인하는 재귀 함수 실행한다.
+        //확인했던 곳을 다시 원상복구한다.
+    //만약 모든 cctv를 다 확인했다면 재귀 종료
+        //board를 확인하면서 사각지대를 count한다.
+        //각각의 시뮬레이션에서 가장 작은 값을 answer에 초기화한다.
+//answer 출력
 
 public class Main {
 
@@ -88,11 +98,11 @@ public class Main {
 
         CCTV cctvNow = cctvs.get(dep);
         int directionCount = direction[cctvNow.type - 1].length;
-        // 1번 : 4
-        // 2번 : 2
-        // 3번 : 4
-        // 4번 : 4
-        // 5번 1
+        // 1번 : 4번
+        // 2번 : 2번
+        // 3번 : 4번
+        // 4번 : 4번
+        // 5번 : 1번
         for(int idx = 0; idx < directionCount; idx++){
 
             watch(cctvNow, direction[cctvNow.type - 1][idx]);
@@ -156,15 +166,15 @@ public class Main {
 
                 //범위 이내
                 if(nx >= 0 && ny >= 0 && nx < height && ny < width){
-                    if(board[nx][ny] == -1){
-                        board[nx][ny] = 0;
-                    }
-                    else if(board[nx][ny] < 0){
+                    //방문 했던 곳이면 + 1
+                    if(board[nx][ny] < 0){
                         board[nx][ny] += 1;
                     }
+                    //cctv이면 다음으로 확인
                     else if(1 <= board[nx][ny] && board[nx][ny] <= 5){
                         continue;
                     }
+                    //벽이면 종료
                     else if(board[nx][ny] == 6){
                         break;
                     }
