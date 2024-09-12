@@ -4,45 +4,32 @@ import java.io.*;
 
 public class Main {
 
-    static String now;
-    static String target;
-    static ArrayDeque<Character> dqNow = new ArrayDeque<>();
-    static char[] arr;
-    static boolean answer;
+    static StringBuilder now;
+    static StringBuilder target;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        now = br.readLine();
-        target = br.readLine();
+        now = new StringBuilder(br.readLine());
+        target = new StringBuilder(br.readLine());
 
-        boolean check = true;
-        while (true){
-            char ch = target.charAt(target.length() - 1);
+        while(true){
             if(target.length() == now.length()){
                 break;
             }
-            if(ch == 'A'){
-                target = target.substring(0, target.length() - 1);
+            if(target.charAt(target.length()-1) == 'A'){
+                target = target.deleteCharAt(target.length()-1);
             }
-            else{
-                target = target.substring(0, target.length() - 1);
-                String s = "";
-                for(int idx = 0; idx < target.length(); idx++){
-                    s += target.charAt(target.length() -idx-1);
-                }
-                target = s;
+            else {
+                target = target.deleteCharAt(target.length()-1);
+                target.reverse();
             }
 
         }
-        if(now.equals(target)){
-            bw.write("1");
-        }
-        else{
-            bw.write("0");
-        }
+
+        bw.write((target.toString().equals(now.toString()) == true ? 1 : 0) +"");
 
         bw.flush();
         bw.close();
