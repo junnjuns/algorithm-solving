@@ -19,7 +19,7 @@ public class Main{
     static int personCnt;
     static int party;
     static int loadCnt;
-    static ArrayList<Node>[] list;
+    static ArrayList<Node>[] list, reverseList;
     
 	public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -32,9 +32,11 @@ public class Main{
 	    party = Integer.parseInt(st.nextToken());
 	    
 	    list = new ArrayList[personCnt + 1];
+	    reverseList = new ArrayList[personCnt + 1];
 	    
 	    for(int idx = 1; idx < personCnt + 1; idx++){
 	        list[idx] = new ArrayList<>();
+	        reverseList[idx] = new ArrayList<>();
 	    }
 	    
         for(int idx = 0; idx < loadCnt; idx++){
@@ -44,11 +46,15 @@ public class Main{
             int cost = Integer.parseInt(st.nextToken());
             
             list[person1].add(new Node(person2, cost));
+            reverseList[person2].add(new Node(person1, cost));
         }	    
         
+        int[] to = dijk(list, party);
+        int[] from = dijk(reverseList, party);
+        
         int answer = 0;
-        for(int idx = 1; idx < personCnt + 1; idx++){
-            answer = Math.max(answer, dijk(idx, party) + dijk(party, idx));
+        for(int idx = 0; idx < to.length; idx++){
+            answer = Math.max(answer, to[idx] + from[idx]);
         }
         
         bw.write(answer+"");
@@ -56,7 +62,7 @@ public class Main{
 	    bw.flush();
 	    bw.close();
 	}
-	static int dijk(int start, int end){
+	static int[] dijk(ArrayList<Node>[] list, int start){
 	    
 	    int[] dist = new int[personCnt + 1];
 	    Arrays.fill(dist, Integer.MAX_VALUE);
@@ -84,6 +90,6 @@ public class Main{
 	            }
 	        }
 	    }
-	    return dist[end];
+	    return dist;
 	}
 }
