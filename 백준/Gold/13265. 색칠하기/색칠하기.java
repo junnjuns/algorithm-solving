@@ -29,6 +29,7 @@ public class Main
 	        circleCnt = Integer.parseInt(st.nextToken());
 	        lineCnt = Integer.parseInt(st.nextToken());
 	        
+	        vis = new int[circleCnt + 1];
 	        list = new ArrayList[circleCnt + 1];
 	        
 	        for(int idx = 0; idx < circleCnt + 1; idx++){
@@ -45,26 +46,23 @@ public class Main
 	            list[y].add(x);
 	        }
 	        
-	        boolean answer = true;
+	        boolean possible = true;
 	        //시뮬 시작
 	        for(int idx = 1; idx < circleCnt + 1; idx++){
 	            
-	            //1번 원부터  시작
-	            boolean result = bfs(idx);
-	            
-	            if(!result){
-	                answer = false;
-	                break;
+	            if(vis[idx] == 0){
+	                //1번 원부터  시작
+    	            if(!bfs(idx)){
+    	                possible = false;
+    	                break;
+	                }
 	            }
+	            
+
 	            
 	        }//원들 모두 확인
 	        
-	        if(answer){
-	            bw.write("possible\n");
-	        }
-	        else{
-	            bw.write("impossible\n");
-	        }
+            bw.write(possible ? "possible\n" : "impossible\n");
 	        
 	    }
 	    
@@ -76,7 +74,6 @@ public class Main
 	    ArrayDeque<Integer> dq = new ArrayDeque<>();
 	    dq.add(start);
 	    
-	    vis = new int[circleCnt + 1];
 	    vis[start] = 1;
 	    
 	    while(dq.size() != 0){
@@ -87,7 +84,7 @@ public class Main
 	            
 	            if(vis[next] == 0){
 	                dq.add(next);
-	                vis[next] = vis[now] == 1 ? -1 : 1;
+	                vis[next] = -vis[now];
 	            }
 	            else if(vis[next] == vis[now]){
 	                return false;
