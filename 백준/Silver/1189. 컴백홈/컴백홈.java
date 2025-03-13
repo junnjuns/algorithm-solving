@@ -33,6 +33,7 @@ public class Main
 	    }
 	    
 	    vis = new int[row][col];
+	    
 	    vis[row - 1][0] = 1;
 	    dfs(row - 1, 0);
 	    
@@ -42,6 +43,10 @@ public class Main
 	}
 	
 	static void dfs(int sx, int sy){
+	    
+	    if(vis[sx][sy] > dist){
+	        return;
+	    }
 	    
 	    //도착지 도착
 	    if(sx == 0 && sy == col - 1){
