@@ -7,7 +7,6 @@ public class Main
     static int[] arr;
     static int[] vis;
     static ArrayList<Integer> list;
-    static int answer;
     
 	public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -32,7 +31,7 @@ public class Main
             
         }        
 	    
-	    bw.write(answer+"");
+	    bw.write(list.size()+"");
 	    
 	    bw.newLine();
 	    
@@ -49,7 +48,6 @@ public class Main
 	    
 	    if(arr[start] == pre){
 	        list.add(pre);
-	        answer += 1;
 	    }
 	    
 	    if(vis[arr[start]] == 0){
