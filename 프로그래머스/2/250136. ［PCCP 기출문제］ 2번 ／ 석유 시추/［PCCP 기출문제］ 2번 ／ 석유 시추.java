@@ -30,31 +30,21 @@ class Solution {
             
         }
         
-        Map<Integer, Set<Integer>> ms = new HashMap<>();
-        
         
         for(int w = 0; w < col; w++){
-            
             Set<Integer> set = new HashSet<>();
-            
             for(int h = 0; h < row; h++){
                 if(board[h][w] != 0){
-                    set.add(board[h][w]);    
+                    set.add(board[h][w]);
                 }
-                
             }
-            ms.put(w, set);
-        } 
-        
-        for(Map.Entry<Integer, Set<Integer>> m : ms.entrySet()){
             
-            int result = 0;
-            for(Integer i : m.getValue()){
-                result += map.get(i);
+            int sum = 0;
+            for(Integer num : set){
+                sum += map.get(num);
             }
-            answer = Math.max(answer, result);
+            answer = Math.max(answer, sum);
         }
-        
         
         return answer;
     }
