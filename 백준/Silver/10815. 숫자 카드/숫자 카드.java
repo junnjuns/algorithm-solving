@@ -15,44 +15,22 @@ public class Main
 	    
 	    n = Integer.parseInt(br.readLine());
 	    st = new StringTokenizer(br.readLine());
-	    arrA = new int[n];
+	    Set<Integer> set = new HashSet<>();
 	    for(int idx = 0; idx < n; idx++){
-	        arrA[idx] = Integer.parseInt(st.nextToken());
+	       set.add(Integer.parseInt(st.nextToken()));
 	    }
-	    
-	    Arrays.sort(arrA);
 	    
 	    m = Integer.parseInt(br.readLine());
 	    st = new StringTokenizer(br.readLine());
-	    arrB = new int[m];
-        for(int idx = 0; idx < m; idx++){
-	        arrB[idx] = Integer.parseInt(st.nextToken());
-	        
-	        binary(0, n -1, arrB[idx]);
-	    }
-        
+        while(st.hasMoreTokens()){
+            if(set.contains(Integer.parseInt(st.nextToken()))){
+                sb.append("1 ");  
+            }
+            else{
+                sb.append("0 ");
+            }
+        }
+        System.out.println(sb);
 	}
-	static void binary(int left, int right, int target){
-	    if(left >= right){
-	        
-	        if(arrA[left] == target){
-	            System.out.print("1 ");
-	        }
-	        else{
-	            System.out.print("0 ");
-	        }
-	        return;
-	    }
-	    
-	    
-	    int mid = left + (right - left) / 2;
-	    
-	    if(target <= arrA[mid]){
-	        binary(left , mid , target);
-	    }
-	    else{
-	        binary(mid + 1 , right, target);
-	    }
-	    
-	}
+
 }
