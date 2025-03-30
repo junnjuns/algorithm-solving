@@ -3,25 +3,10 @@ import java.io.*;
 
 public class Main
 {   
-    static class Info implements Comparable<Info>{
-        int left;
-        int right;
-        int sum;
-        
-        public Info(int left, int right, int sum){
-            this.left = left;
-            this.right = right;
-            this.sum = sum;
-        }
-        
-        public int compareTo(Info o1){
-            return this.sum - o1.sum;
-        }
-    }
     
     static int n;
     static int[] arr;
-    static PriorityQueue<Info> pq = new PriorityQueue<>();
+    static int bestLeft, bestRight, bestSum;
     
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -37,11 +22,13 @@ public class Main
 		
 		//정렬
 		Arrays.sort(arr);
+		bestLeft = 0;
+		bestRight = n - 1;
+		bestSum = arr[bestLeft] + arr[bestRight];
 		
-		binary(0, n - 1);
+    	binary(0, n - 1);
 		
-		Info info = pq.poll();
-		bw.write(arr[info.left]+" "+arr[info.right]);
+		bw.write(arr[bestLeft]+" "+arr[bestRight]);
 		
 		bw.flush();
 		bw.close();
@@ -53,11 +40,14 @@ public class Main
 	        return;
 	    }
 	    
-	    int result = Math.abs(arr[left] + arr[right]);
+	    int sum = arr[left] + arr[right];
+	    if(Math.abs(sum) < Math.abs(bestSum)){
+	        bestLeft = left;
+	        bestRight = right;
+	        bestSum = sum;
+	    }
 	    
-	    pq.add(new Info(left, right, result));
-	    
-	    if(arr[left] + arr[right] <= 0){
+	    if(sum < 0){
 	        binary(left + 1, right);
 	    }
 	    else{
