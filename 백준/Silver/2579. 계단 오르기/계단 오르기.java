@@ -12,65 +12,54 @@ import java.io.*;
 public class Main
 {   
     static int stairsCnt;
-    static int[] stairsArr;
-    static int[][] answerArr;
+    static int[][] dp;
+    static int[] score;
     
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		//계단의 개수
 		stairsCnt = Integer.parseInt(br.readLine());
-		//계단 배열
-		stairsArr = new int[stairsCnt + 1];
-		//최댓값 들어있는 배열
-		answerArr = new int[stairsCnt + 1][3];
+		score = new int[stairsCnt + 1];
+		dp = new int[stairsCnt + 1][3];
 		
-		//계단 값 초기화
-		for(int idx = 1; idx < stairsCnt + 1; idx++){
-		    stairsArr[idx] = Integer.parseInt(br.readLine());
-		}
-		
-		for(int[] row : answerArr){
+		for(int[] row : dp){
 		    Arrays.fill(row, -1);
 		}
 		
-		//재귀 시작
-		// 현재 위치, 연속된 횟수
-		run(0, 0, 0);
+		for(int idx = 0; idx < stairsCnt; idx++){
+		    score[idx + 1] = Integer.parseInt(br.readLine() );
+		}
 		
-		int answer = Math.max(answerArr[stairsCnt][2], Math.max(answerArr[stairsCnt][0], answerArr[stairsCnt][1]));
-		bw.write(answer+"");
+		dp[0][0] = 0;
+		if(stairsCnt >= 1){
+		    dp[1][1] = score[1];    
+		}
+		if(stairsCnt >= 2){
+		    dp[2][1] = score[2];
+		    dp[2][2] = score[1] + score[2];    
+		}
+		
+		
+		for(int idx = 3 ; idx < stairsCnt + 1; idx++){
+		    
+		    //2 연속 으로 될 때
+		    if(dp[idx - 1][1] != -1){
+		        dp[idx][2] = dp[idx - 1][1] + score[idx];
+		    }
+		    
+		    //1 연속으로 될 때
+		    int value = Math.max(dp[idx - 2][1], dp[idx - 2][2]);
+		    if(value != -1){
+		        dp[idx][1] = value + score[idx];
+		    }
+		    
+		}
+		
+		
+		bw.write(Math.max(dp[stairsCnt][1], dp[stairsCnt][2])+"");
 		bw.flush();
-		bw.close();
-	}
-	
-	static void run(int value, int pos, int cnt){
-	    //같은 상태를 더 낮은 점수로 재방문하면 중단
-        if (value <= answerArr[pos][cnt]) return;
-        answerArr[pos][cnt] = value;
-
-        if (pos == stairsCnt) return;               // 마지막 칸이면 끝
-	    
-	    
-	    //3번 연속으로 계단 못 감
-	    if(cnt < 2 && check(pos + 1)){
-	        //현재 위치 + 한 계단
-	        int next = value + stairsArr[pos + 1];
-	        run(next, pos + 1, cnt + 1);
-	    }
-	    if(check(pos + 2)){
-    	    //현재 위치 + 두 계단
-    	    int next = value + stairsArr[pos + 2];
-    	    run(next, pos + 2, 1);
-	    }
-	    
-	    
-	    
-	}
-	
-	static boolean check(int pos){
-	    return pos <= stairsCnt;
+	    bw.close();
 	}
 	
 }
