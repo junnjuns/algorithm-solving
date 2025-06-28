@@ -10,13 +10,15 @@ public class Main
 	    
 	    int n = Integer.parseInt(br.readLine());
 	    
-	    int[] dp = new int[1001];
+	    int[] dp = new int[n + 1];
 	    
 	    dp[1] = 1;
-	    dp[2] = 3;
-	    dp[3] = 5;
-	    
-	    for(int idx = 4; idx < 1001; idx++){
+	    if(n >= 2)
+	        dp[2] = 3; 
+	    if(n >= 3)
+    	    dp[3] = 5;
+	        
+	    for(int idx = 4; idx < n + 1; idx++){
 	        dp[idx] = (dp[idx - 1] + dp[idx - 2] * 2) % 10007;
 	    }
 	    
