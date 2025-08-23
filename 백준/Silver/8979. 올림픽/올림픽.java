@@ -31,7 +31,7 @@ public class Main
         //target 보다 큰 나라 counting
         int cnt = 1;
         
-        for(int i = 1; i < countryCnt; i++){
+        for(int i = 1; i < countryCnt + 1; i++){
             if(i == target){
                 continue;
             }
