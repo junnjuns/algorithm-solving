@@ -1,4 +1,8 @@
-SELECT dr_name, dr_id, mcdp_cd, date_format(hire_ymd, '%Y-%m-%d')
-from doctor
-where mcdp_cd in ('cs', 'gs')
-order by hire_ymd desc, dr_name;
+select 
+DR_NAME,
+DR_ID,
+MCDP_CD,
+date_format(HIRE_YMD, '%Y-%m-%d')
+from DOCTOR
+where MCDP_CD in ('CS', 'GS')
+order by HIRE_YMD desc, DR_NAME;
