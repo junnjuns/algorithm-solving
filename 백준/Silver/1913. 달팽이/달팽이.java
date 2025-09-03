@@ -10,7 +10,6 @@ public class Main
     static int size;
     static int target;
     static int[][] board;
-    static Map<Integer, int[]> map;
     static int[] dx = {1, 0, -1, 0};
     static int[] dy = {0, 1, 0 , -1};
     
@@ -23,13 +22,13 @@ public class Main
 	    target = Integer.parseInt(br.readLine());
 	    
 	    board = new int[size][size];
-	    map = new HashMap<>(); //좌표 저장용 map : (값, 좌표)
 	    
         int x = 0;
         int y = 0;
         
 	    board[x][y] = size * size; //초기 값
-	    map.put(board[x][y], new int[] {x + 1, y + 1});
+	    int answerX = 0;
+	    int answerY = 0;
 	    
 	    while(true){
 	        if(board[x][y] == 1){
@@ -44,7 +43,10 @@ public class Main
     	            
     	            if(check(nx, ny) && board[nx][ny] == 0){
     	                board[nx][ny] = board[x][y] - 1;
-    	                map.put(board[nx][ny], new int[] {nx + 1, ny + 1});
+    	                if(board[nx][ny] == target){
+    	                    answerX = nx;
+    	                    answerY = ny;
+    	                }
     	                x = nx;
     	                y = ny;
     	            }
@@ -65,7 +67,7 @@ public class Main
 	        }
 	        bw.newLine();
 	    }
-	    bw.write(map.get(target)[0]+" "+map.get(target)[1]);
+	    bw.write((answerX+1)+" "+(answerY+1));
 	    
 	    bw.flush();
 	    bw.close();
