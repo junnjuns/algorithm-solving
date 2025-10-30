@@ -21,12 +21,15 @@ public class Main
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         
-        board = new int[n][m];
+        board = new int[n + 1][m + 1];
         
-        for(int row = 0; row < n; row++){
+        for(int row = 1; row <= n; row++){
             st = new StringTokenizer(br.readLine());
-            for(int col = 0; col < m; col++){
-                board[row][col] = Integer.parseInt(st.nextToken());
+            for(int col = 1; col <= m; col++){
+                int num = Integer.parseInt(st.nextToken());
+                
+                board[row][col] += num + board[row - 1][col] + board[row][col - 1] - board[row - 1][col - 1];
+                
             }
         }
 	    
@@ -34,18 +37,14 @@ public class Main
 	    
 	    for(int idx = 0; idx < k; idx++){
 	        st = new StringTokenizer(br.readLine());
-	        int x1 = Integer.parseInt(st.nextToken()) - 1;
-	        int y1 = Integer.parseInt(st.nextToken()) - 1;
-	        int x2 = Integer.parseInt(st.nextToken()) - 1;
-	        int y2 = Integer.parseInt(st.nextToken()) - 1;
+	        int x1 = Integer.parseInt(st.nextToken());
+	        int y1 = Integer.parseInt(st.nextToken());
+	        int x2 = Integer.parseInt(st.nextToken());
+	        int y2 = Integer.parseInt(st.nextToken());
 	        
-	        int sum = 0;
-	        for(int row = x1; row <= x2; row++){
-	            for(int col = y1; col <= y2; col++){
-	                sum += board[row][col];
-	            }
-	        }
+	        int sum = board[x2][y2] - board[x2][y1 - 1] - board[x1 - 1][y2] + board[x1 - 1][y1 - 1];
 	        bw.write(sum+"\n");
+	        
 	    }
 	    
 	    
