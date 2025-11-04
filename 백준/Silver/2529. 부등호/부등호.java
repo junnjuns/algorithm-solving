@@ -7,8 +7,8 @@ public class Main
     static int[] selectArr;
     static boolean[] vis;
     static String[] arr;
-    static String max;
-    static String min;
+    static int[] max;
+    static int[] min;
     static boolean first;
     
 	public static void main(String[] args) throws Exception {
@@ -20,6 +20,8 @@ public class Main
 	    
 	    
 	    selectArr = new int[n + 1];
+	    max = new int[n + 1];
+	    min = new int[n + 1];
 	    vis = new boolean[10];
 	    
 	    String str = br.readLine();
@@ -27,7 +29,13 @@ public class Main
 	    
 	    func(0);
 	    
-	    bw.write(max+"\n"+min);
+	    for(int n : max){
+	        bw.write(n+"");
+	    }
+	    bw.newLine();
+	    for(int n : min){
+	        bw.write(n+"");
+	    }
 	    
 	    bw.flush();
 	    bw.close();
@@ -35,28 +43,19 @@ public class Main
 	
 	static void func(int dep){
 	    if(dep == n + 1){
-	        int res = 0;
-	        
-	        for(int i = 0; i < n; i++){
-	            if(arr[i].equals(">")){
-	                if(selectArr[i] < selectArr[i + 1]) return; //조건 충족 안되기에 종료
-	            }
-	            else{
-	                if(selectArr[i] > selectArr[i + 1]) return; //조건 충족 안되기에 종료
-	            }
-	        }
-	        
-	        StringBuilder sb = new StringBuilder();
-	        for(int i = 0; i < n + 1; i++){
-	            sb.append(selectArr[i]);
-	        }
 	        
 	        if(!first){
 	            first = true;
-	            min = sb.toString();
+    	        for(int i = 0; i < n + 1; i++){
+    	            min[i] = selectArr[i];
+    	        }	            
 	        }
 	        
-	        max = sb.toString();
+	        for(int i = 0; i < n + 1; i++){
+	            max[i] = selectArr[i];
+	        }
+	        
+	        
 	        return;
 	    }
 	    
@@ -66,6 +65,22 @@ public class Main
 	        
 	        vis[i] = true;
 	        selectArr[dep] = i;
+	        
+	        if(dep > 0){
+	            if(arr[dep - 1].equals(">")){
+	                if(selectArr[dep - 1] < selectArr[dep]){
+	                    vis[i] = false;
+	                    continue;
+	                } 
+	            }
+	            else{
+	                if(selectArr[dep - 1] > selectArr[dep]){
+	                    vis[i] = false;
+	                    continue;
+	                }
+	            }
+	        }
+	        
 	        func(dep + 1);
 	        vis[i] = false;
 	    }
