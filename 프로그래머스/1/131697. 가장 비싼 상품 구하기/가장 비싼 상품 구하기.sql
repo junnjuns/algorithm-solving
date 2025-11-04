@@ -1,0 +1,2 @@
+select MAX(PRICE) as MAX_PRICE
+from PRODUCT
