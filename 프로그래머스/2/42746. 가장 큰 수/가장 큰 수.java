@@ -7,10 +7,7 @@ class Comp implements Comparator<String>{
         int num1 = Integer.parseInt(a + b);
         int num2 = Integer.parseInt(b + a);
         
-        if(num1 < num2){
-            return num2 - num1; //음수 반환 == 자리 그대로
-        }
-        return num2 - num1; //양수 반환 == 자리 옮기기
+        return num2 - num1;
     }
 }
 
