@@ -1,5 +1,7 @@
+# 입양 간 기록 있지만, 보호소 기록에 없는 동물 조회
+
 select
-o.ANIMAL_ID,
-o.name
-from ANIMAL_INS as i right join ANIMAL_OUTS as o on i.ANIMAL_ID = o.ANIMAL_ID
-where i.ANIMAL_ID is null
+AO.ANIMAL_ID,
+AO.NAME
+from ANIMAL_OUTS as AO left join ANIMAL_INS AI on AI.ANIMAL_ID = AO.ANIMAL_ID
+where AI.ANIMAL_ID is null
