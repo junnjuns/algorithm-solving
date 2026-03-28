@@ -1,8 +1,8 @@
 select
-    date_format(DATETIME, '%k') as HOUR,
+    hour(DATETIME) as HOUR,
     count(*) as COUNT
 from
     ANIMAL_OUTS
-where date_format(DATETIME, '%k') >= 9 and date_format(DATETIME, '%k') <= 19
-group by date_format(DATETIME, '%k')
+where hour(DATETIME) >= 9 and hour(DATETIME) <= 19
+group by hour(DATETIME)
 order by HOUR(datetime)
