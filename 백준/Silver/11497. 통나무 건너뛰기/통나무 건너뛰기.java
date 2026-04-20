@@ -28,17 +28,8 @@ public class Main
             
             Arrays.sort(arr); // 정렬
             
-            int[] resArr = new int[n];
-            
-
-            for(int i = 0; i < n / 2; i++){
-                resArr[i] = arr[i * 2];
-                resArr[n - 1 - i] = arr[i * 2 + 1];
-            }
-            resArr[n / 2] = arr[n - 1];
-            
-            for(int i = 0; i < n; i++){
-                answer = Math.max(answer, Math.abs(resArr[(i + 1) % n] - resArr[i]));
+            for(int i = 0; i < n - 2; i++){
+                answer = Math.max(answer, arr[i + 2] - arr[i]);
             }
             
             bw.write(answer+"\n");
